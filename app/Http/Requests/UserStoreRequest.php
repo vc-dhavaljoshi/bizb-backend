@@ -38,7 +38,7 @@ class UserStoreRequest extends FormRequest
             'name.min' => ':attribute must be of minimum 3 characters',
             'name.max' => ':attribute can be of maximum 50 characters',
             'email.required' => ':attribute is required!',
-            'phone.required' => ':attribute is required!',
+            'mobile.required' => ':attribute is required!',
             'password.required' => ':attribute is required!',
         ];
     }
@@ -53,7 +53,7 @@ class UserStoreRequest extends FormRequest
             'username' => 'Username',
             'name' => 'Name',
             'email' => 'Email address',
-            'phone' => 'Phone number',
+            'mobile' => 'Phone number',
             'password' => 'Password'
         ];
     }

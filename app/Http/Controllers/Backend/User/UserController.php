@@ -10,9 +10,15 @@ use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Repositories\Backend\UserRepository;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository) {
+        $this->userRepository = $userRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index');
+        return view('backend.user.index');
     }
 
     /**
@@ -30,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        return view('backend.user.create');
     }
 
     /**
@@ -41,24 +47,10 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        $user = User::create([
-            'name' => $request->all()['name'],
-            'email' => $request->all()['email'],
-            'username' => $request->all()['username'],
-            'mobile' => $request->all()['mobile'],
-            'password' => Hash::make($request->all()['password']),
-        ]);
-        $user->syncRoles([@$request->all()['role']]);
-        $user->syncPermissions(@$request->all()['permissions']);
-        $avatar = $request->avatar;
-        if(isset($avatar) && $avatar != '') {
-            $response = $user->addMediaFromRequest('avatar')
-                            ->preservingOriginal()
-                            ->toMediaCollection('avatar');
-        }
-        return redirect()->route('admin.users.index');
-    }
+        $response = $this->userRepository->store($request);
 
+        return redirect()->route('backend.users.index'); 
+    } 
     /**
      * Display the specified resource.
      *

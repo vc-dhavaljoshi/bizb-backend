@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'superadmin@example.com',
                 'username' => 'superadmin',
                 'mobile' => '012345678',
-                'password' => bcrypt('secret'),
+                'password' => bcrypt('00'),
                 'email_verified_at' => now(),
                 'role' => 'superadmin',
             ],
